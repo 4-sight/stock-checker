@@ -16,11 +16,16 @@ module.exports = function (app) {
   app.route('/api/stock-prices')
     .get(async (req, res) => {
       let stock = req.query.stock
-      let data = await dataFetch(stock)
-
+      let data
+      
+      try{data = await dataFetch(stock)}
+      catch(err) {console.error(err)}
+      
+      data = JSON.parse(data)
+      
       const stockData = {
-        stock: stock,
-        price: data,
+        stock: data.symbol,
+        price: data.latestPrice,
         likes: 5
       }
       res.json({stockData})
