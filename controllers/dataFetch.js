@@ -5,7 +5,7 @@ module.exports = (stock) => {
 
   return new Promise((resolve, reject) => {
     request.get(
-      `https://api.iextrading.com/1.0/stock/${stock}/price`,
+      `https://api.iextrading.com/1.0/stock/${stock}/quote`,
       (err, res) => {
         if(err) {
           reject(err)
