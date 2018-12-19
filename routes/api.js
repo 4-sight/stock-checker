@@ -20,7 +20,7 @@ module.exports = function (app) {
       
       try{data = await dataFetch(stock)}
       catch(err) {console.error(err)}
-      
+      console.log(req)
       data = JSON.parse(data)
       
       const stockData = {
