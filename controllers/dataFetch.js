@@ -3,7 +3,7 @@ const request = require('request')
 
 module.exports = async(stock) => {
 
-  data = await new Promise((resolve, reject) => {
+  let data = await new Promise((resolve, reject) => {
     request.get(
       `https://api.iextrading.com/1.0/stock/${stock}/quote`,
       (err, res) => {
@@ -15,9 +15,9 @@ module.exports = async(stock) => {
         } else {
           resolve(JSON.parse(res.body))
         }
-    })
+      })
   })
-  .catch(err => {console.error(err)})
+    .catch(err => {console.error(err)})
 
   return data
 }
