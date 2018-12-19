@@ -23,10 +23,8 @@ module.exports = function (app) {
         req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null)
       
-      try{data = await dataFetch(stock)}
-      catch(err) {console.error(err)}
       console.log(ip)
-      data = JSON.parse(data)
+      data = dataFetch(stock)
       
       const stockData = {
         stock: data.symbol,

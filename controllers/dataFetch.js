@@ -1,9 +1,9 @@
 
 const request = require('request')
 
-module.exports = (stock) => {
+module.exports = async(stock) => {
 
-  return new Promise((resolve, reject) => {
+  data = await new Promise((resolve, reject) => {
     request.get(
       `https://api.iextrading.com/1.0/stock/${stock}/quote`,
       (err, res) => {
@@ -13,8 +13,11 @@ module.exports = (stock) => {
         if(res.statusCode !== 200) {
           reject(res.statusCode)
         } else {
-          resolve(res.body)
+          resolve(JSON.parse(res.body))
         }
     })
   })
+  .catch(err => {console.error(err)})
+
+  return data
 }
