@@ -17,10 +17,15 @@ module.exports = function (app) {
     .get(async (req, res) => {
       let stock = req.query.stock
       let data
+
+      const ip = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        (req.connection.socket ? req.connection.socket.remoteAddress : null)
       
       try{data = await dataFetch(stock)}
       catch(err) {console.error(err)}
-      console.log(req)
+      console.log(ip)
       data = JSON.parse(data)
       
       const stockData = {
