@@ -23,13 +23,15 @@ module.exports = function (app) {
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
       (req.connection.socket ? req.connection.socket.remoteAddress : null)
-
+      
       if(stock) {
-        if (stock.length === 1) {
-          res.json(singleStockHandler(stock, ip, like))
+        if (typeof stock === 'string') {
+          let stockData = await singleStockHandler(stock, ip, like)
+          res.json(stockData)
         } else
-        if (stock.length === 2) {
-          res.json(doubleStockHandler(stock, ip, like))
+        if (typeof stock === 'object') {
+          let stockData = await doubleStockHandler(stock, ip, like)
+          res.json(stockData)
         }
       } else {
         res.send('invalid request')
