@@ -6,7 +6,7 @@ const UsersDB = require('../models/users')
 
 module.exports = async (stock, ip, like) => {
 
-  const data = await dataFetch(stock).then(data => data)
+  const data = await dataFetch(stock)
 
   if (like) {
     let user, likes
