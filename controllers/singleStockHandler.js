@@ -20,25 +20,21 @@ module.exports = async (stock, ip, like) => {
     catch(err) {throw (err)}
 
     if (user) {
-      console.log('user exists')
       // check for existing like
       let liked = false
       user.likedStocks.forEach(likedStock => {
         if (likedStock === data.symbol) { liked = true }
       })
       if (liked) {
-        console.log('like already added')
         // Get likes from db
         try { likes = await StocksDB.getLikesAndReturn(data) }
         catch(err) {console.error(err)}
         
       } else {
-        console.log('add like to profile')
         // Add stock to user's liked stocks
         UsersDB.addLikedStock(ip, data.symbol)
         // Update and return likes
         likes = await StocksDB.addLikeAndReturn(data.symbol)
-        console.log('stock updated', likes)
       }
 
       return {
