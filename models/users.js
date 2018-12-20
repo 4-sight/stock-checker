@@ -29,8 +29,6 @@ UserDB.addLikedStock = function (user, stock) {
       if(err) {console.error('failed to add stock to liked', err)}
       else
       if(!doc) {console.error('no corresponding doc found/ created')}
-      else
-      {console.log(`stock added to ${user}'s liked stocks`)}
     }
   )
 }
