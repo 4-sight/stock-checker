@@ -63,7 +63,7 @@ module.exports = async (stock, ip, like) => {
 
   } else {
     // Get likes from db
-    let likes = await StocksDB.getLikesAndReturn(data)
+    let likes = await StocksDB.getLikesAndReturn(data.symbol)
     return {
       stockData: {
         stock: data.symbol,

@@ -26,7 +26,7 @@ StockDB.addLikeAndReturn = async function (stock) {
 
 StockDB.getLikesAndReturn = async function (stock) {
 
-  let numLikes = await this.findOne({ stock: stock.symbol })
+  let numLikes = await this.findOne({ stock: stock })
     .then(res => {
       if(res) {return res._doc.likes}
     })
