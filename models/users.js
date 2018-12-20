@@ -6,5 +6,35 @@ const userSchema = new mongoose.Schema({
   likedStocks: [String]
 })
 
-module.exports = mongoose.model('StockPrice-user', userSchema)
+const UserDB = mongoose.model('StockPrice-user', userSchema)
 
+// methods
+UserDB.createUser = function (user, stock) {
+
+  this.create({
+    userIP: user,
+    likedStocks: [ stock ]
+  }, 
+  (err) => {
+    if(err) {console.log(err)}
+  })
+}
+
+UserDB.addLikedStock = function (user, stock) {
+
+  this.findOneAndUpdate(
+    { userIP: user },
+    { $push: {likedStocks: stock} },
+    (err, doc) => {
+      if(err) {console.error('failed to add stock to liked', err)}
+      else
+      if(!doc) {console.error('no corresponding doc found/ created')}
+      else
+      {console.log(`stock added to ${user}'s liked stocks`)}
+    }
+  )
+}
+
+
+
+module.exports = UserDB
