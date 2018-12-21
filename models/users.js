@@ -33,6 +33,18 @@ UserDB.addLikedStock = function (user, stock) {
   )
 }
 
+UserDB.removeLikedStock = function (user, stock) {
+
+  this.findOneAndUpdate(
+    { userIP: user },
+    { $pull: {likedStocks: stock} },
+    (err, doc) => {
+      if(err) {console.error('failed to add stock to liked', err)}
+      else
+      if(!doc) {console.error('no corresponding doc found/ created')}
+    }
+  )
+}
 
 
 module.exports = UserDB
