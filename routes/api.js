@@ -19,8 +19,13 @@ module.exports = function (app) {
       
       const stock = req.query.stock
       const like = req.query.like
-      const ip = req.headers['x-forwarded-for']
-      
+      const ip = (
+        req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        (req.connection.socket ? req.connection.socket.remoteAddress : null)
+      ).split(',')[0]
+
       if(stock) {
         if (typeof stock === 'string') {
           let stockData = await singleStockHandler(stock, ip, like)
