@@ -34,31 +34,30 @@ suite('Functional Tests', function() {
       let response = await chai.request(server)
         .get('/api/stock-prices')
         .query({stock: 'goog'})
-        
+
       assert.equal(response.status, 200)
       assert.equal(response.body.stockData.stock, 'GOOG')
       assert.isNumber(response.body.stockData.price)
       assert.isNumber(response.body.stockData.likes)
-
     })
       
+    
     test('1 stock with like', async () => {
        
-      
-      let [ initLikes ] = 
+      await removeLike(localIPv4, 'SQ')
+
+      let [ initLikes, response ] = 
       await Promise.all(
         [
           getLikes('SQ'),
-          removeLike(localIPv4, 'SQ')
+          chai.request(server)
+            .get('/api/stock-prices')
+            .query({
+              stock: 'sq',
+              like: true
+            })
         ]
       )
-      
-      let response = await chai.request(server)
-        .get('/api/stock-prices')
-        .query({
-          stock: 'sq',
-          like: true
-        })
       
       assert.equal(response.status, 200)
       assert.equal(response.body.stockData.stock, 'SQ')
@@ -102,7 +101,6 @@ suite('Functional Tests', function() {
       assert.isNumber(response2.body.stockData.price)
       assert.equal(response2.body.stockData.likes, currentLikes)
     })
-
 
 
     test('2 stocks', async() => {
@@ -157,7 +155,6 @@ suite('Functional Tests', function() {
       assert.isNumber(stockB.rel_likes)
       assert.equal(stockB.rel_likes, rel_likesB)
     })
-      
   })
 
 })
