@@ -10,9 +10,9 @@ const StockDB = mongoose.model('StockPrice-stocks', stockSchema)
 
 //Methods
 
-StockDB.addLikeAndReturn = async function (stock) {
+StockDB.addLikeAndReturn = function (stock) {
 
-  let result = await this.findOneAndUpdate(
+  let result = this.findOneAndUpdate(
     { stock: stock },
     { $inc: { likes: 1 }},
     {
@@ -24,12 +24,15 @@ StockDB.addLikeAndReturn = async function (stock) {
   return result
 }
 
-StockDB.getLikesAndReturn = async function (stock) {
+StockDB.getLikesAndReturn = function (stock) {
 
-  let numLikes = await this.findOne({ stock: stock })
+  let numLikes = this.findOne({ stock: stock })
     .then(res => {
       if(res) {return res._doc.likes}
+      else 
+      if(!res) { return 0 }
     })
+
   return numLikes
 }
 

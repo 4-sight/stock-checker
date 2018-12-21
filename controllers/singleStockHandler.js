@@ -27,7 +27,7 @@ module.exports = async (stock, ip, like) => {
       })
       if (liked) {
         // Get likes from db
-        try { likes = await StocksDB.getLikesAndReturn(data) }
+        try { likes = await StocksDB.getLikesAndReturn(data.symbol) }
         catch(err) {console.error(err)}
         
       } else {
@@ -64,6 +64,7 @@ module.exports = async (stock, ip, like) => {
   } else {
     // Get likes from db
     let likes = await StocksDB.getLikesAndReturn(data.symbol)
+
     return {
       stockData: {
         stock: data.symbol,
