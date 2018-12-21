@@ -19,12 +19,17 @@ module.exports = function (app) {
       
       const stock = req.query.stock
       const like = req.query.like
-      const ip = (
+      
+      let ip = (
         req.headers['x-forwarded-for'] ||
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null)
       ).split(',')[0]
+
+      if(ip == '::ffff:127.0.0.1') {
+        ip = '127.0.0.1'
+      }
 
       if(stock) {
         if (typeof stock === 'string') {
